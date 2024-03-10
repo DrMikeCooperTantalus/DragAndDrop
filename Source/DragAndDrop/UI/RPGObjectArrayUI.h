@@ -14,15 +14,15 @@ class DRAGANDDROP_API URPGObjectArrayUI : public UUserWidget
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	TArray<class URPGObject*> Objects;
-
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 	class UPanelWidget* Container;
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 	class UDDSlot* Prefab;
 
-	virtual void NativeConstruct() override;
-
+	void SetObjects(TArray<class URPGObject*>* objects);
+	
+protected:
 	void CreateSlots();
+
+	TArray<class URPGObject*>* Objects;
 };

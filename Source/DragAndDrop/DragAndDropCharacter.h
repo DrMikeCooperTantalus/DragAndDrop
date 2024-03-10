@@ -12,7 +12,7 @@ UCLASS(config=Game)
 class ADragAndDropCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
+   	
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
@@ -39,7 +39,12 @@ class ADragAndDropCharacter : public ACharacter
 
 public:
 	ADragAndDropCharacter();
-	
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=RPG)
+	TArray<class URPGObject*> Belt;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=RPG)
+	TArray<class URPGObject*> BackPack;
 
 protected:
 

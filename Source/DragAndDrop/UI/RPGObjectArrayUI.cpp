@@ -7,20 +7,20 @@
 #include "DragAndDrop/UI/DDSlot.h"
 #include "Components/PanelWidget.h"
 
-void URPGObjectArrayUI::NativeConstruct()
+void URPGObjectArrayUI::SetObjects(TArray<URPGObject*>* objects)
 {
-	Super::NativeConstruct();
+	Objects = objects;
 	CreateSlots();
 }
 
 void URPGObjectArrayUI::CreateSlots()
 {
 	// create a copy of the object and set for each element
-	for (int i=0; i<Objects.Num(); i++)
+	for (int i=0; i<Objects->Num(); i++)
 	{
 		UDDSlot* slot = DuplicateObject<UDDSlot>(Prefab, Container);
 		Container->AddChild(slot);
-		slot->Object->SetObject(Objects[i]);
+		slot->Object->SetObject((*Objects)[i]);
 	}
 
 	// hide the prefab
