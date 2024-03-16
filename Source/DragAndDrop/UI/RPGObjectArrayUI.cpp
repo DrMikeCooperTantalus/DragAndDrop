@@ -13,6 +13,21 @@ void URPGObjectArrayUI::SetObjects(TArray<URPGObject*>* objects)
 	CreateSlots();
 }
 
+bool URPGObjectArrayUI::CanDrop(UDDSlot* slot, URPGObject* obj)
+{
+	if (obj == nullptr)
+		return true;
+
+	uint8 type = static_cast<uint8>(obj->ItemType.GetValue());
+	return (type & AllowedTypes) != 0;
+}
+
+void URPGObjectArrayUI::Drop(UDDSlot* slot, URPGObject* obj)
+{
+	if (Objects->IsValidIndex(slot->Index))
+		(*Objects)[slot->Index] = obj;
+}
+
 void URPGObjectArrayUI::CreateSlots()
 {
 	// create a copy of the object and set for each element
@@ -21,6 +36,8 @@ void URPGObjectArrayUI::CreateSlots()
 		UDDSlot* slot = DuplicateObject<UDDSlot>(Prefab, Container);
 		Container->AddChild(slot);
 		slot->Object->SetObject((*Objects)[i]);
+		slot->Index = i;
+		slot->ParentContainer = this;
 	}
 
 	// hide the prefab

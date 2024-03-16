@@ -20,6 +20,9 @@ public:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 	class URPGObjectArrayUI* BackPack;
 
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+	class URPGEquipScreen* EquipScreen;
+	
 	UFUNCTION(BlueprintCallable)
 	void SetCharacter(class ADragAndDropCharacter* ch);
 };

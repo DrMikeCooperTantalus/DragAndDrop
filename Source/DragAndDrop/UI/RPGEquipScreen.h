@@ -4,34 +4,32 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "DragAndDrop/RPGObject.h"
 #include "DragAndDrop/UI/DDSlot.h"
-#include "RPGObjectArrayUI.generated.h"
+#include "RPGEquipScreen.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DRAGANDDROP_API URPGObjectArrayUI : public UUserWidget, public IDDContainer
+class DRAGANDDROP_API URPGEquipScreen : public UUserWidget, public IDDContainer
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
-	class UPanelWidget* Container;
-	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
-	class UDDSlot* Prefab;
 
-	UPROPERTY(EditAnywhere, meta = (Bitmask, BitmaskEnum = "ERPGItemType"))
-	uint8 AllowedTypes;
-	
-	void SetObjects(TArray<class URPGObject*>* objects);
-	TArray<class URPGObject*>* GetObjectsArray() { return Objects; }
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+	class UDDSlot* HelmetSlot;
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+	class UDDSlot* WeaponSlot;
+	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
+	class UDDSlot* ScrollSlot;
 
 	virtual bool CanDrop(class UDDSlot* slot, class URPGObject* obj) override;
 	virtual void Drop(class UDDSlot* slot, class URPGObject* obj) override;
+
+	virtual void NativeConstruct() override;
+	
+	void SetCharacter(class ADragAndDropCharacter* ch);
 	
 protected:
-	void CreateSlots();
-
-	TArray<class URPGObject*>* Objects;
+	class ADragAndDropCharacter* Character;
 };

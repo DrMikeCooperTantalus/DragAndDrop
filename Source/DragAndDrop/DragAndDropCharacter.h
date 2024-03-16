@@ -41,6 +41,13 @@ public:
 	ADragAndDropCharacter();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=RPG)
+	class URPGObject* EquippedHelmet;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=RPG)
+	class URPGObject* EquippedWeapon;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=RPG)
+	class URPGObject* EquippedScroll;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=RPG)
 	TArray<class URPGObject*> Belt;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=RPG)

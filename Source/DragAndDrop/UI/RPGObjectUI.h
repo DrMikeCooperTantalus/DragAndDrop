@@ -21,6 +21,10 @@ public:
 	class UTextBlock* Name;
 
 	void SetObject(class URPGObject* obj);
+	class URPGObject* GetObj() const { return Obj; }
+
+	class UDDSlot* ParentSlot;
+	
 protected:
 	class URPGObject* Obj;
 };
