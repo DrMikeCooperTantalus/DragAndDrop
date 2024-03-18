@@ -30,28 +30,17 @@ void UDragRPGObjectUI::NativeOnDragDetected(const FGeometry& InGeometry, const F
 	UDragDropOperation* DragWidget = UWidgetBlueprintLibrary::CreateDragDropOperation(UDragDropOperation::StaticClass());
 	
 	DragWidget->DefaultDragVisual = this;
-	DragWidget->DefaultDragVisual->SetVisibility(ESlateVisibility::HitTestInvisible);
+
 	DragWidget->Pivot = EDragPivot::MouseDown;
 	DragWidget->Payload = ParentSlot;
-	
-	Icon->SetColorAndOpacity(FColor(255,0,0));
 
-	RemoveFromParent();
+	if (!ParentSlot->ParentContainer->IsReadOnly())
+	{
+		DragWidget->DefaultDragVisual->SetVisibility(ESlateVisibility::HitTestInvisible);
+		RemoveFromParent();
+	}
 	
 	OutOperation = DragWidget;
-}
-
-void UDragRPGObjectUI::NativeOnDragLeave(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
-{
-	Super::NativeOnDragLeave(InDragDropEvent, InOperation);
-	Icon->SetColorAndOpacity(FColor(0, 255,0));
-}
-
-void UDragRPGObjectUI::NativeOnDragEnter(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent,
-                                         UDragDropOperation* InOperation)
-{
-	Icon->SetColorAndOpacity(FColor(0, 0, 255));
-	Super::NativeOnDragEnter(InGeometry, InDragDropEvent, InOperation);
 }
 
 void UDragRPGObjectUI::NativeOnDragCancelled(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
@@ -59,7 +48,6 @@ void UDragRPGObjectUI::NativeOnDragCancelled(const FDragDropEvent& InDragDropEve
 	EndDrag();
 	
 	SetVisibility(ESlateVisibility::Visible);
-	Icon->SetColorAndOpacity(FColor(255, 255,255));
 	Super::NativeOnDragCancelled(InDragDropEvent, InOperation);
 }
 

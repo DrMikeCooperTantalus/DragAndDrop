@@ -23,12 +23,17 @@ public:
 
 	UPROPERTY(EditAnywhere, meta = (Bitmask, BitmaskEnum = "ERPGItemType"))
 	uint8 AllowedTypes;
+
+	// set this to true to have an array that does not get modified, eg a palette
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool ReadOnly = false;
 	
 	void SetObjects(TArray<class URPGObject*>* objects);
 	TArray<class URPGObject*>* GetObjectsArray() { return Objects; }
 
 	virtual bool CanDrop(class UDDSlot* slot, class URPGObject* obj) override;
 	virtual void Drop(class UDDSlot* slot, class URPGObject* obj) override;
+	virtual bool IsReadOnly() override { return ReadOnly; }
 	
 protected:
 	void CreateSlots();

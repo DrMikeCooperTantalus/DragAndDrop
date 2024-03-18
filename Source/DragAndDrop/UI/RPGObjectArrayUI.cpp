@@ -18,12 +18,19 @@ bool URPGObjectArrayUI::CanDrop(UDDSlot* slot, URPGObject* obj)
 	if (obj == nullptr)
 		return true;
 
+	// a readonly array wont get written to, so this is fine
+	if (ReadOnly)
+		return true;
+	
 	uint8 type = static_cast<uint8>(obj->ItemType.GetValue());
 	return (type & AllowedTypes) != 0;
 }
 
 void URPGObjectArrayUI::Drop(UDDSlot* slot, URPGObject* obj)
 {
+	if (ReadOnly)
+		return;
+	
 	if (Objects->IsValidIndex(slot->Index))
 		(*Objects)[slot->Index] = obj;
 }

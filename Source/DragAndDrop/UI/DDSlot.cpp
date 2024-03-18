@@ -16,6 +16,35 @@ void UDDSlot::NativeConstruct()
 	Object->ParentSlot = this;
 }
 
+void UDDSlot::NativeOnDragEnter(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent,
+	UDragDropOperation* InOperation)
+{
+	Super::NativeOnDragEnter(InGeometry, InDragDropEvent, InOperation);
+
+	// look at the object hovered over us and see if we can accept it as a valid drop
+	UDDSlot* sourceSlot = Cast<UDDSlot>(InOperation->Payload.Get());
+	if (sourceSlot)
+	{
+		URPGObject* objMine = Object->GetObj();
+		URPGObject* objTheirs = sourceSlot->Object->GetObj();
+		// find the appropriate animation - need to check the swap both ways
+		LastAnimation = (CanDrop(objTheirs) && sourceSlot->CanDrop(objMine)) ? OpenToDrop : CloseVsDrop;
+		if (LastAnimation)
+			PlayAnimation(LastAnimation);
+	}
+}
+
+void UDDSlot::NativeOnDragLeave(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	Super::NativeOnDragLeave(InDragDropEvent, InOperation);
+	if (LastAnimation)
+	{
+		PlayAnimation(LastAnimation,1,1,EUMGSequencePlayMode::Reverse);
+		LastAnimation = nullptr;
+	}
+}
+
+
 bool UDDSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent,
                            UDragDropOperation* InOperation)
 {
@@ -38,6 +67,12 @@ bool UDDSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& In
 			if (dragObjectUI)
 				dragObjectUI->EndDrag();
 		}
+
+		if (LastAnimation)
+		{
+			PlayAnimation(LastAnimation,1,1,EUMGSequencePlayMode::Reverse);
+			LastAnimation = nullptr;
+		}
 	}
 
 	return result;
@@ -45,7 +80,8 @@ bool UDDSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& In
 
 void UDDSlot::SetObject(URPGObject* obj)
 {
-	Object->SetObject(obj);
+	if (!ParentContainer->IsReadOnly())
+		Object->SetObject(obj);
 	if (ParentContainer)
 		ParentContainer->Drop(this, obj);
 }

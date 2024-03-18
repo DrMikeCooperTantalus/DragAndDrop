@@ -25,7 +25,8 @@ public:
 
 	virtual bool CanDrop(class UDDSlot* slot, class URPGObject* obj) override;
 	virtual void Drop(class UDDSlot* slot, class URPGObject* obj) override;
-
+	virtual bool IsReadOnly() override { return false; }
+	
 	virtual void NativeConstruct() override;
 	
 	void SetCharacter(class ADragAndDropCharacter* ch);
