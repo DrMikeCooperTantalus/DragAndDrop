@@ -18,7 +18,8 @@ FReply UDragRPGObjectUI::NativeOnMouseButtonDown(const FGeometry& InGeometry, co
 {
 	Super::NativeOnMouseButtonDown(InGeometry, InMouseEvent);
 
-	FEventReply ReplyResult = UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, EKeys::LeftMouseButton);
+	FEventReply ReplyResult =
+		UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, EKeys::LeftMouseButton);
 	return ReplyResult.NativeReply;
 }
 
