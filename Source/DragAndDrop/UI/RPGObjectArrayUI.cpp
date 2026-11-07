@@ -7,6 +7,7 @@
 #include "DragAndDrop/UI/DDSlot.h"
 #include "Components/PanelWidget.h"
 #include "Components/GridSlot.h"
+#include "RPGObjectArrayUI.h"
 
 void URPGObjectArrayUI::SetObjects(TArray<URPGObject*>* objects)
 {
@@ -36,9 +37,16 @@ void URPGObjectArrayUI::Drop(UDDSlot* slot, URPGObject* obj)
 		(*Objects)[slot->Index] = obj;
 }
 
+void URPGObjectArrayUI::OnDoubleClicked(int index)
+{
+	OnDoubleClick.Broadcast(index);
+}
+
 void URPGObjectArrayUI::CreateSlots()
 {
 	int numColumns = 4;
+	Slots.Empty();
+
 	// create a copy of the object and set for each element
 	for (int i=0; i<Objects->Num(); i++)
 	{
@@ -48,6 +56,7 @@ void URPGObjectArrayUI::CreateSlots()
 		slot->Object->SetObject((*Objects)[i]);
 		slot->Index = i;
 		slot->ParentContainer = this;
+		Slots.Add(slot);
 
 		// deal with Grid Layouts
 		UGridSlot* gridSlot = Cast<UGridSlot>(slot->Slot);
@@ -60,4 +69,12 @@ void URPGObjectArrayUI::CreateSlots()
 
 	// hide the prefab
 	Prefab->SetVisibility(ESlateVisibility::Collapsed);
+}
+
+
+void URPGObjectArrayUI::Refresh()
+{
+	if (Objects != nullptr)
+		for (int i = 0; i < Objects->Num(); i++)
+			Slots[i]->Object->SetObject((*Objects)[i]);
 }

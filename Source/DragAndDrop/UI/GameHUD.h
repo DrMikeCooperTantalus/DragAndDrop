@@ -23,6 +23,21 @@ public:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 	class URPGEquipScreen* EquipScreen;
 	
+	virtual void NativeConstruct();
+
 	UFUNCTION(BlueprintCallable)
 	void SetCharacter(class ADragAndDropCharacter* ch);
+
+protected:
+
+	UFUNCTION()
+	void OnBackPackDoubleClick(int index);
+
+	UFUNCTION()
+	void OnBeltDoubleClick(int index);
+
+	UFUNCTION()
+	void OnEquipmentDoubleClick(int index);
+
+	TWeakObjectPtr<ADragAndDropCharacter> Character;
 };

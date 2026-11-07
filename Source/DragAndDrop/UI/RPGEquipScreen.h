@@ -26,11 +26,18 @@ public:
 	virtual bool CanDrop(class UDDSlot* slot, class URPGObject* obj) override;
 	virtual void Drop(class UDDSlot* slot, class URPGObject* obj) override;
 	virtual bool IsReadOnly() override { return false; }
-	
+	virtual void OnDoubleClicked(int index) override;
+
 	virtual void NativeConstruct() override;
 	
 	void SetCharacter(class ADragAndDropCharacter* ch);
 	
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDoubleClick, int, index);
+	FOnDoubleClick OnDoubleClick;
+
+	class URPGObject* GetObject(int index);
+	void SetObject(int index, class URPGObject* object);
+
 protected:
 	class ADragAndDropCharacter* Character;
 };

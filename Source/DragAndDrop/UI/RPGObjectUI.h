@@ -25,6 +25,8 @@ public:
 
 	class UDDSlot* ParentSlot;
 	
+	virtual FReply NativeOnMouseButtonDoubleClick(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent);
+
 protected:
 	class URPGObject* Obj;
 };

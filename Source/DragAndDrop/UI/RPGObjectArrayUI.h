@@ -28,15 +28,23 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool ReadOnly = false;
 	
+
 	void SetObjects(TArray<class URPGObject*>* objects);
 	TArray<class URPGObject*>* GetObjectsArray() { return Objects; }
 
 	virtual bool CanDrop(class UDDSlot* slot, class URPGObject* obj) override;
 	virtual void Drop(class UDDSlot* slot, class URPGObject* obj) override;
 	virtual bool IsReadOnly() override { return ReadOnly; }
-	
+	virtual void OnDoubleClicked(int index) override;
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDoubleClick, int, index);
+	FOnDoubleClick OnDoubleClick;
+
+	void Refresh();
+
 protected:
 	void CreateSlots();
 
 	TArray<class URPGObject*>* Objects;
+	TArray<class UDDSlot*> Slots;
 };

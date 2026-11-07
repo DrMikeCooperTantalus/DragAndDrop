@@ -5,6 +5,7 @@
 
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
+#include "DDSlot.h"
 #include "DragAndDrop/RPGObject.h"
 
 void URPGObjectUI::SetObject(URPGObject* obj)
@@ -16,4 +17,11 @@ void URPGObjectUI::SetObject(URPGObject* obj)
 	}
 	SetVisibility(obj == nullptr ? ESlateVisibility::Hidden : ESlateVisibility::Visible);
 	Obj = obj;
+}
+
+FReply URPGObjectUI::NativeOnMouseButtonDoubleClick(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	if (ParentSlot && ParentSlot->ParentContainer)
+		ParentSlot->ParentContainer->OnDoubleClicked(ParentSlot->Index);
+	return Super::NativeOnMouseButtonDoubleClick(InGeometry, InMouseEvent);
 }

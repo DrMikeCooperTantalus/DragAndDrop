@@ -11,6 +11,7 @@ public:
 	virtual bool CanDrop(class UDDSlot* slot, class URPGObject* obj) = 0;
 	virtual void Drop(class UDDSlot* slot, class URPGObject* obj) = 0;
 	virtual bool IsReadOnly() = 0;
+	virtual void OnDoubleClicked(int index) = 0;
 };
 
 #include "DDSlot.generated.h"
