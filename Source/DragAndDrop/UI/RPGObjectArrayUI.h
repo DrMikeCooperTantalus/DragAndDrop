@@ -21,7 +21,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, meta=(BindWidget))
 	class UDDSlot* Prefab;
 
-	UPROPERTY(EditAnywhere, meta = (Bitmask, BitmaskEnum = "ERPGItemType"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	uint8 AllowedTypes;
 
 	// set this to true to have an array that does not get modified, eg a palette

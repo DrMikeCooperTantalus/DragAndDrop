@@ -6,7 +6,7 @@
 #include "Engine/DataAsset.h"
 
 UENUM(BlueprintType, Meta = (Bitflags, UseEnumValuesAsMaskValuesInEditor = "true"))
-enum class ERPGItemType : uint8
+enum ERPGItemType
 {
 	None = 0 UMETA(Hidden),
 	Potion = 1,
