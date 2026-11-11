@@ -15,7 +15,9 @@ void URPGObjectUI::SetObject(URPGObject* obj)
 		Name->SetText(FText::FromString(obj->GetName()));
 		Icon->SetBrushFromTexture(obj->Icon);
 	}
+	// make the object invisible if it's null eg empty inventory slot
 	SetVisibility(obj == nullptr ? ESlateVisibility::Hidden : ESlateVisibility::Visible);
+	// store a live pointer
 	Obj = obj;
 }
 
